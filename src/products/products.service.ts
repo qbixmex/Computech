@@ -1,28 +1,72 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { v4 as UUID, validate as isUUID } from 'uuid';
 
-import { products, Product } from './data';
-import { CreateProductDto } from './dto/create-product.dto';
-import { UpdateProductDto } from './dto/update-product.dto';
+import { Product, products } from './data';
+import { CreateProductDto, UpdateProductDto } from './dto';
+import { BasicResponse } from 'src/common/interfaces';
 
 @Injectable()
 export class ProductsService {
-  create(createProductDto: CreateProductDto) {
-    return 'This action adds a new product';
+
+  private products = products;
+
+  create(createProductDto: CreateProductDto): Product {
+
+    const product: Product = {
+      id: UUID(),
+      ...createProductDto,
+      createdAt: new Date().getTime(),
+      updatedAt: new Date().getTime(),
+    };
+
+    //* Add product to products array
+    this.products.push(product);
+
+    return product;
+
   }
 
   findAll(): Product[] {
-    return products;
+    return this.products;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} product`;
+  findOne(id: string): Product {
+
+    const product = this.products.find(product => (product.id === id));
+
+    if (!product) throw new NotFoundException(`Product with id: <${ id }> not found!`);
+    
+    return product;
+
   }
 
-  update(id: number, updateProductDto: UpdateProductDto) {
-    return `This action updates a #${id} product`;
+  update(id: string, updateProductDto: UpdateProductDto): Product {
+
+    const productDB = this.findOne(id);
+
+    const updatedProduct = {
+      ...productDB,
+      ...updateProductDto,
+      updatedAt: new Date().getTime()
+    };
+
+    this.products = this.products.map(product => product.id === id ? updatedProduct : product)
+
+    return updatedProduct;
+
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} product`;
+  remove(id: string): BasicResponse {
+
+    const productDB = this.findOne(id);
+
+    this.products = this.products.filter(product => product.id !== productDB.id);
+
+    return {
+      ok: true,
+      message: `Product with <${id}> product deleted successfully!`
+    };
+
   }
+
 }

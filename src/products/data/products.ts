@@ -1,3 +1,9 @@
+export enum ProductCondition {
+  new = 'new',
+  used = 'used',
+  refurbished = 'refurbished',
+}
+
 export interface Product {
   id: string;
   title: string;
@@ -7,12 +13,12 @@ export interface Product {
   price: number;
   description: string;
   images: string[];
-  condition: 'new' | 'used' | 'refurbished';
-  published: boolean;
+  condition: ProductCondition;
+  published?: boolean;
   category: string;
-  tags: string[];
-  createdAt: string | number,
-  updatedAt: string | number,
+  tags?: string[];
+  createdAt: string | number;
+  updatedAt: string | number;
 }
 
 const products: Product[] = [
@@ -25,7 +31,7 @@ const products: Product[] = [
     price: 505,
     description: 'BEST FOR BUSY WORK-LIFE BALANCERS - Stay connected all day with reliable performance and an expansive display',
     images: ['image-1.jpg', 'image-2.jpg', 'image-3.jpg', 'image-4.jpg' , 'image-5.jpg'],
-    condition: 'new',
+    condition: ProductCondition.new,
     published: true,
     category: 'Laptops',
     tags: ['computers', 'windows', 'pc'],
@@ -41,7 +47,7 @@ const products: Product[] = [
     price: 389,
     description: 'Laptop for work, school and play: With Office 365 and 1 TB of cloud storage, this device combines functionality, connectivity, style, and value',
     images: ['image-1.jpg', 'image-2.jpg', 'image-3.jpg', 'image-4.jpg' , 'image-5.jpg'],
-    condition: 'new',
+    condition: ProductCondition.new,
     published: true,
     category: 'Laptops',
     tags: ['computers', 'windows', 'pc'],
@@ -57,7 +63,7 @@ const products: Product[] = [
     price: 184,
     description: 'Chromebook runs on Chrome OS - an operating system by Google that is built for the way we live today. It comes with built-in virus protection, boots up in seconds and continues to stay fast over time. Google apps you know and love come standard on every Chromebook, which means you can edit, download, and convert Microsoft Office files in Google Docs, Sheets and Slides',
     images: ['image-1.jpg', 'image-2.jpg', 'image-3.jpg', 'image-4.jpg' , 'image-5.jpg'],
-    condition: 'new',
+    condition: ProductCondition.new,
     published: true,
     category: 'Laptops',
     tags: ['computers', 'google', 'pc'],
@@ -73,7 +79,7 @@ const products: Product[] = [
     price: 1539.99,
     description: 'The new M2 chip makes the 13-inch MacBook Pro more capable than ever. The same compact design supports up to 20 hours of battery life1 and an active cooling system to sustain enhanced performance. Featuring a brilliant Retina display, a FaceTime HD camera and studio-quality mics, it\'s our most portable pro laptop.',
     images: ['image-1.jpg', 'image-2.jpg', 'image-3.jpg', 'image-4.jpg' , 'image-5.jpg'],
-    condition: 'new',
+    condition: ProductCondition.new,
     published: true,
     category: 'Laptops',
     tags: ['computers', 'apple', 'm2'],
@@ -89,7 +95,7 @@ const products: Product[] = [
     price: 118.25,
     description: 'Ideal game settings instantly give you the edge. Get optimal color and image contrast to see scenes more vividly and spot enemies hiding in the dark. Game Mode adjusts any game to fill your screen with every detail in view',
     images: ['image-1.jpg', 'image-2.jpg', 'image-3.jpg', 'image-4.jpg' , 'image-5.jpg'],
-    condition: 'new',
+    condition: ProductCondition.new,
     published: true,
     category: 'electronics',
     tags: ['screens', 'monitors', 'gaming'],
@@ -105,7 +111,7 @@ const products: Product[] = [
     price: 29.99,
     description: 'The tiny Logitech Unifying receiver stays in your laptop. There’s no need to unplug it when you move around, so there\'s less worry of it being lost. And you can easily add compatible wireless mice and keyboards to the same wireless receiver',
     images: ['image-1.jpg', 'image-2.jpg', 'image-3.jpg', 'image-4.jpg' , 'image-5.jpg'],
-    condition: 'new',
+    condition: ProductCondition.new,
     published: true,
     category: 'Accessories',
     tags: ['mouse', 'usb', 'bluetooth'],
@@ -121,7 +127,7 @@ const products: Product[] = [
     price: 29.99,
     description: 'Dacoity wired keyboard that meets the need of gamers, typists, programmers, and writers, and combines your office and gaming experience. If you have any quality problems, please contact customer service. We offer 180 days refund or replacement and a free-time warranty for the quality problem.',
     images: ['image-1.jpg', 'image-2.jpg', 'image-3.jpg', 'image-4.jpg' , 'image-5.jpg'],
-    condition: 'new',
+    condition: ProductCondition.new,
     published: true,
     category: 'Accessories',
     tags: ['keyboards', 'usb'],
@@ -137,7 +143,7 @@ const products: Product[] = [
     price: 47.99,
     description: 'Compact mechanical gaming keyboard, 19 different lighting effects and game modes, Ergonomic designed steel series mechanical game keyboards high-quality durable metal-abs, free USB connector for a reliable connection, Compatible with windows 10, windows 8, windows 7, windows vista, or windows xp, limited mac os keyboard support works well with all major computers brands and gaming pcs.',
     images: ['image-1.jpg', 'image-2.jpg', 'image-3.jpg', 'image-4.jpg' , 'image-5.jpg'],
-    condition: 'new',
+    condition: ProductCondition.new,
     published: true,
     category: 'Accessories',
     tags: ['keyboards', 'usb'],
@@ -153,7 +159,7 @@ const products: Product[] = [
     price: 29.99,
     description: 'Digital Stereo Sound: Fine-tuned drivers provide enhanced digital audio for music, calls, meetings and more, Rotating Noise Canceling Mic, Handy In-line Controls, Simply plug the USB-A connector into your computer and you\'re ready to talk or listen without the need to install software, ideal for gaming, streaming, Video Calls.',
     images: ['image-1.jpg', 'image-2.jpg', 'image-3.jpg', 'image-4.jpg' , 'image-5.jpg'],
-    condition: 'new',
+    condition: ProductCondition.new,
     published: true,
     category: 'Accessories',
     tags: ['headphones', 'usb', 'audio'],
@@ -169,7 +175,7 @@ const products: Product[] = [
     price: 29.99,
     description: 'HD 720p video calling and HD video recording, Video capture: Upto 1280 x 720 pixels, Built in microphone filters out background noise, Windows 7 Windows 8 or Windows 10 or later mac OS 10.10 or later chrome OSAndroid v 5.0 or above',
     images: ['image-1.jpg', 'image-2.jpg', 'image-3.jpg', 'image-4.jpg' , 'image-5.jpg'],
-    condition: 'new',
+    condition: ProductCondition.new,
     published: true,
     category: 'Webcams',
     tags: ['video', 'hd', 'usb'],
