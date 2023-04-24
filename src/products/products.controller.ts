@@ -1,5 +1,6 @@
 
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, NotFoundException, Param, Patch, Post } from '@nestjs/common';
+import { validate as isUUID } from 'uuid';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
@@ -20,7 +21,17 @@ export class ProductsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.productsService.findOne(+id);
+    const product = this.productsService.findOne(id);
+
+    if (!isUUID(id)) {
+      throw new BadRequestException(`<${ id }> is not a valid UUID!`)
+    }
+
+    if (!product) {
+      throw new NotFoundException(`Product with id: <${ id }> not found!`);
+    }
+
+    return product;
   }
 
   @Patch(':id')
