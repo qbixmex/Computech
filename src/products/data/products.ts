@@ -11,8 +11,8 @@ export interface Product {
   published: boolean;
   category: string;
   tags: string[];
-  createdAt: string | number,
-  updatedAt: string | number,
+  createdAt: string | number;
+  updatedAt: string | number;
 }
 
 const products: Product[] = [
