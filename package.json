@@ -1,8 +1,12 @@
 {
   "name": "computech",
   "version": "0.0.3",
-  "description": "",
-  "author": "",
+  "description": "Computech is an online Technology Store Backend where you can manage products, orders, costumers, coupons and related resources",
+  "author": "Daniel Gonzalez Briseno",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/qbixmex/computech"
+  },
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
