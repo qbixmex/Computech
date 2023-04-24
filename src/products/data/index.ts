@@ -1,0 +1,1 @@
+export { default as products, Product } from './products';
