@@ -57,10 +57,16 @@ export class ProductsService {
   }
 
   remove(id: string): BasicResponse {
+
+    const productDB = this.findOne(id);
+
+    this.products = this.products.filter(product => product.id !== productDB.id);
+
     return {
       ok: true,
       message: `Product with <${id}> product deleted successfully!`
     };
+
   }
 
 }

@@ -1,6 +1,6 @@
 {
   "name": "computech",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Computech is an online Technology Store Backend where you can manage products, orders, costumers, coupons and related resources",
   "author": "Daniel Gonzalez Briseno",
   "repository": {
