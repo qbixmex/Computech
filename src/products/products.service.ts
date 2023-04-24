@@ -2,12 +2,13 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import { v4 as UUID, validate as isUUID } from 'uuid';
 
 import { Product, products } from './data';
-import { CreateProductDto } from './dto/create-product.dto';
-import { UpdateProductDto } from './dto/update-product.dto';
+import { CreateProductDto, UpdateProductDto } from './dto';
 import { BasicResponse } from 'src/common/interfaces';
 
 @Injectable()
 export class ProductsService {
+
+  private products = products;
 
   create(createProductDto: CreateProductDto): Product {
 
@@ -19,21 +20,19 @@ export class ProductsService {
     };
 
     //* Add product to products array
-    products.push(product);
+    this.products.push(product);
 
     return product;
 
   }
 
   findAll(): Product[] {
-    return products;
+    return this.products;
   }
 
   findOne(id: string): Product {
 
-    const product = products.find(product => (product.id === id));
-
-    if (!isUUID(id)) throw new BadRequestException(`<${ id }> is not a valid UUID!`);
+    const product = this.products.find(product => (product.id === id));
 
     if (!product) throw new NotFoundException(`Product with id: <${ id }> not found!`);
     
@@ -41,8 +40,20 @@ export class ProductsService {
 
   }
 
-  update(id: string, updateProductDto: UpdateProductDto): any {
-    return `This action updates a #${id} product`;
+  update(id: string, updateProductDto: UpdateProductDto): Product {
+
+    const productDB = this.findOne(id);
+
+    const updatedProduct = {
+      ...productDB,
+      ...updateProductDto,
+      updatedAt: new Date().getTime()
+    };
+
+    this.products = this.products.map(product => product.id === id ? updatedProduct : product)
+
+    return updatedProduct;
+
   }
 
   remove(id: string): BasicResponse {

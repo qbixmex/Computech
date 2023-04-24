@@ -5,7 +5,7 @@ import {
 
 import { ProductCondition } from '../data';
 
-export class CreateProductDto {
+class CreateProductDto {
 
   @IsString()
   @MinLength(3)
@@ -52,3 +52,5 @@ export class CreateProductDto {
   tags?: string[];
 
 }
+
+export default CreateProductDto;
