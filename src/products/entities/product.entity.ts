@@ -30,10 +30,10 @@ class Product {
 
   @Column({
     type: 'text',
-    array: true,
-    default: [ProductCondition.new]
+    nullable: true,
+    default: 'new'
   })
-  condition: ProductCondition[];
+  condition: string;
 
   @Column({
     type: 'int', 

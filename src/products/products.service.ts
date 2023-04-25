@@ -1,72 +1,160 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { v4 as UUID } from 'uuid';
+import { BadRequestException, Injectable, InternalServerErrorException, Logger, NotFoundException } from '@nestjs/common';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 
-import { Product, products } from './data';
+import { Product } from './entities';
 import { CreateProductDto, UpdateProductDto } from './dto';
-import { BasicResponse } from 'src/common/interfaces';
+import { BasicResponse } from '../common/interfaces';
+import { PaginationDto } from '../common/dtos';
 
 @Injectable()
 export class ProductsService {
 
-  private products = products;
+  private readonly logger = new Logger('ProductsService');
 
-  create(createProductDto: CreateProductDto): Product {
+  constructor(
+    @InjectRepository(Product)
+    private readonly productRepository: Repository<Product>
+  ) {}
 
-    const product: Product = {
-      id: UUID(),
-      ...createProductDto,
-      createdAt: new Date().getTime(),
-      updatedAt: new Date().getTime(),
-    };
+  async create(createProductDto: CreateProductDto): Promise<Product> {
 
-    //* Add product to products array
-    this.products.push(product);
+    try {
 
-    return product;
+      const product = this.productRepository.create(createProductDto);
+
+      await this.productRepository.save(product);
+
+      return {
+        id: product.id,
+        title: product.title,
+        slug: product.slug,
+        brand: product.brand,
+        color: product.color,
+        price: product.price,
+        description: product.description,
+        images: product.images,
+        condition: product.condition,
+        stock: product.stock,
+        published: product.published,
+        category: product.category,
+        tags: product.tags,
+        createdAt: product.createdAt,
+        updatedAt: product.updatedAt,
+      };
+
+    } catch (error) {
+      this.handleDBExceptions(error);
+    }
 
   }
 
-  findAll(): Product[] {
-    return this.products;
+  async findAll(
+    paginationDto: PaginationDto
+  ): Promise<Product[]> {
+
+    const { limit = 10, offset = 0 } = paginationDto;
+
+    const products = await this.productRepository.find({
+      take: limit,
+      skip: offset,
+    });
+
+    return products.map(product => {
+      return {
+        id: product.id,
+        title: product.title,
+        slug: product.slug,
+        brand: product.brand,
+        color: product.color,
+        price: product.price,
+        description: product.description,
+        images: product.images,
+        condition: product.condition,
+        stock: product.stock,
+        published: product.published,
+        category: product.category,
+        tags: product.tags,
+        createdAt: product.createdAt,
+        updatedAt: product.updatedAt,
+      };
+    });
+
   }
 
-  findOne(id: string): Product {
+  async findOne(id: string): Promise<Product> {
 
-    const product = this.products.find(product => (product.id === id));
+    const product = await this.productRepository.findOneBy({ id });
 
     if (!product) throw new NotFoundException(`Product with id: <${ id }> not found!`);
     
-    return product;
-
-  }
-
-  update(id: string, updateProductDto: UpdateProductDto): Product {
-
-    const productDB = this.findOne(id);
-
-    const updatedProduct = {
-      ...productDB,
-      ...updateProductDto,
-      updatedAt: new Date().getTime()
+    return {
+      id: product.id,
+      title: product.title,
+      slug: product.slug,
+      brand: product.brand,
+      color: product.color,
+      price: product.price,
+      description: product.description,
+      images: product.images,
+      condition: product.condition,
+      stock: product.stock,
+      published: product.published,
+      category: product.category,
+      tags: product.tags,
+      createdAt: product.createdAt,
+      updatedAt: product.updatedAt,
     };
 
-    this.products = this.products.map(product => product.id === id ? updatedProduct : product)
+  }
 
-    return updatedProduct;
+  async update(id: string, updateProductDto: UpdateProductDto): Promise<Product> {
+
+    const product = await this.productRepository.preload({ id, ...updateProductDto });
+
+    product.updatedAt = String(new Date().getTime());
+
+    await this.productRepository.save(product);
+
+    return {
+      id: product.id,
+      title: product.title,
+      slug: product.slug,
+      brand: product.brand,
+      color: product.color,
+      price: product.price,
+      description: product.description,
+      images: product.images,
+      condition: product.condition,
+      stock: product.stock,
+      published: product.published,
+      category: product.category,
+      tags: product.tags,
+      createdAt: product.createdAt,
+      updatedAt: product.updatedAt,
+    };
 
   }
 
-  remove(id: string): BasicResponse {
+  async remove(id: string): Promise<BasicResponse> {
 
-    const productDB = this.findOne(id);
+    const product = await this.findOne(id);
 
-    this.products = this.products.filter(product => product.id !== productDB.id);
+    await this.productRepository.remove(product);
 
     return {
       ok: true,
       message: `Product with <${id}> product deleted successfully!`
     };
 
+  }
+
+  private handleDBExceptions( error: any ) {
+    if (error.code === '23505') {
+      throw new BadRequestException(error.detail);
+    }
+    this.logger.error(error);
+    throw new InternalServerErrorException('Unexpected error, check console logs!');
   }
 
 }
