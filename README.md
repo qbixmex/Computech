@@ -25,6 +25,42 @@ $ yarn run start:dev
 $ yarn run start:prod
 ```
 
+## Environment Variables
+
+Copy ```.env.template``` to ```.env```
+
+And fill the correct values within **.env**.
+
+```bash
+# Terminal
+$ cp .env.template .env
+```
+
+## Docker
+
+Load Docker Image
+
+```bash
+# Terminal
+$ docker-compose up -d
+```
+
+## Node
+
+__You can generate your JWT_SECRET with NODE__
+
+```bash
+# Enter to NODE REPL
+$ node
+
+# Execute this line
+$ require('crypto').randomBytes(64).toString('hex');
+```
+
+__Copy generated secret and paste it into environment variables__
+
+```.env```
+
 ## Test
 
 ```bash
