@@ -27,7 +27,7 @@ import { ProductsModule } from './products/products.module';
       rootPath: join(__dirname, '..', 'public'),
     }),
 
-    ProductsModule
+    ProductsModule,
   ],
   controllers: [],
   providers: [],
