@@ -9,12 +9,15 @@
     "computech",
     "Computech",
     "dolem",
+    "dtos",
     "logitech",
     "macbook",
     "nestjs",
     "pentium",
+    "postgres",
     "redragon",
     "Redragon",
-    "samsung"
+    "samsung",
+    "typeorm"
   ]
 }

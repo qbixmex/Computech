@@ -16,7 +16,7 @@ class CreateProductDto {
   slug: string;
 
   @IsString()
-  @MinLength(3)
+  @MinLength(2)
   brand: string;
 
   @IsString()
@@ -36,7 +36,12 @@ class CreateProductDto {
   images: string[];
 
   @IsIn([ 'new', 'used', 'refurbished' ])
-  condition: ProductCondition;
+  condition: string;
+
+  @IsNumber()
+  @IsPositive()
+  @IsOptional()
+  stock?: number;
 
   @IsBoolean()
   @IsOptional()
