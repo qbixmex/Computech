@@ -1,5 +1,5 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
-import { v4 as UUID, validate as isUUID } from 'uuid';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { v4 as UUID } from 'uuid';
 
 import { Product, products } from './data';
 import { CreateProductDto, UpdateProductDto } from './dto';
