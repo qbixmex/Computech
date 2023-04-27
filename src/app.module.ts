@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ServeStaticModule } from '@nestjs/serve-static';
 
 import { ProductsModule } from './products/products.module';
+import { SeedModule } from './seed/seed.module';
 
 @Module({
 
@@ -28,6 +29,8 @@ import { ProductsModule } from './products/products.module';
     }),
 
     ProductsModule,
+
+    SeedModule,
   ],
   controllers: [],
   providers: [],

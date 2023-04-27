@@ -1,3 +1,5 @@
+import { v4 as uuid } from 'uuid';
+
 export enum ProductCondition {
   new = 'new',
   used = 'used',
@@ -5,7 +7,7 @@ export enum ProductCondition {
 }
 
 export interface Product {
-  id: string;
+  id?: string;
   title: string;
   slug: string;
   brand: string;
@@ -17,13 +19,13 @@ export interface Product {
   published?: boolean;
   category: string;
   tags?: string[];
-  createdAt: string | number;
-  updatedAt: string | number;
+  createdAt?: string | number;
+  updatedAt?: string | number;
 }
 
 const products: Product[] = [
   {
-    "id": "f0a0408a-6f9e-401f-bee2-5040ce82f8b3",
+    "id": uuid(),
     "title": "HP 14 Laptop, Intel Pentium Silver N6000",
     "slug": "hp-14-laptop-intel-pentium-silver-n6000",
     "brand": "hp",
@@ -55,7 +57,7 @@ const products: Product[] = [
     updatedAt: new Date('2022-05-12T09:22:33.435Z').getTime(),
   },
   {
-    id: '65a48044-d7cc-47cc-87e7-97a05f9f4119',
+    id: uuid(),
     title: 'Asus Chromebook C223 11.6" HD, Intel Dual Core',
     slug: 'asus-chromebook-c223-11.6-hd-intel-dual-core',
     brand: 'Asus',
@@ -71,7 +73,7 @@ const products: Product[] = [
     updatedAt: new Date('2022-05-12T15:32:22.543Z').getTime(),
   },
   {
-    id: '8b6bd102-aa02-4aad-bb77-88220870ffcf',
+    id: uuid(),
     title: 'Apple 2022 MacBook Pro Laptop with M2 Chip',
     slug: 'apple-2022-macbook-pro-laptop-with-m2-chip',
     brand: 'Apple',
@@ -87,7 +89,7 @@ const products: Product[] = [
     updatedAt: new Date('2022-05-12T21:45:22.067Z').getTime(),
   },
   {
-    id: '644f3052-2554-4419-9874-f0ea359d48f9',
+    id: uuid(),
     title: 'Samsung T350 Series 22-Inch FHD 1080p Computer Monitor',
     slug: 'Samsung T350 Series 22-Inch FHD 1080p Computer Monitor',
     brand: 'Samsung',
@@ -103,7 +105,7 @@ const products: Product[] = [
     updatedAt: new Date('2022-06-12T09:05:22.456Z').getTime(),
   },
   {
-    id: '8bd1b119-7b6a-42e7-9ba1-2d3905d1bc64',
+    id: uuid(),
     title: 'Logitech M510 Wireless Computer Mouse for PC with USB',
     slug: 'logitech-m510-wireless-computer-mouse-for-pc-with-usb',
     brand: 'Logitech',
@@ -135,7 +137,7 @@ const products: Product[] = [
     updatedAt: new Date('2022-06-12T12:15:55.467Z').getTime(),
   },
   {
-    id: '796a1839-c780-4f17-a8f0-316890705109',
+    id: uuid(),
     title: 'Redragon K552 Mechanical Gaming Keyboard',
     slug: 'redragon-k552-mechanical-gaming-keyboard',
     brand: 'Redragon',
@@ -151,7 +153,7 @@ const products: Product[] = [
     updatedAt: new Date('2023-02-02T15:145:05.444Z').getTime(),
   },
   {
-    id: 'a12e1813-672d-40b1-9e09-f888ace6829d',
+    id: uuid(),
     title: 'Logitech H390 Wired Headset for PC or Laptop',
     slug: 'logitech-h390-wired-headset-for-pc-or-laptop',
     brand: 'Logitech',
@@ -167,7 +169,7 @@ const products: Product[] = [
     updatedAt: new Date('2023-04-03T18:45:05.122Z').getTime(),
   },
   {
-    id: '0f8afe91-d31e-4d49-9555-233117c9e5f5',
+    id: uuid(),
     title: 'Logitech C270 HD Webcam',
     slug: 'Logitech C270 HD Webcam',
     brand: 'Logitech',

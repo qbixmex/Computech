@@ -3,7 +3,7 @@ import {
   IsPositive, IsString, MinLength
 } from 'class-validator';
 
-import { ProductCondition } from '../data';
+import { ProductCondition } from '../../seed/data';
 
 class CreateProductDto {
 

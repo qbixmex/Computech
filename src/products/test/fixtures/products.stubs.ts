@@ -1,5 +1,5 @@
 import { BasicResponse } from '../../../common/interfaces';
-import { Product, ProductCondition } from "../../data";
+import { Product, ProductCondition } from "../../../seed/data";
 
 export const products: Product[] = [
   {
