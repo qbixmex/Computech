@@ -13,11 +13,6 @@ export class ProductsController {
 
   constructor(private readonly productsService: ProductsService) {}
 
-  @Post()
-  async create(@Body() createProductDto: CreateProductDto): Promise<Product> {
-    return await this.productsService.create(createProductDto);
-  }
-
   @Get()
   async findAll(
     @Query() paginationDto: PaginationDto
@@ -30,6 +25,11 @@ export class ProductsController {
     @Param('id', ParseUUIDPipe) id: string
   ): Promise<Product> {
     return await this.productsService.findOne(id);
+  }
+
+  @Post()
+  async create(@Body() createProductDto: CreateProductDto): Promise<Product> {
+    return await this.productsService.create(createProductDto);
   }
 
   @Patch(':id')

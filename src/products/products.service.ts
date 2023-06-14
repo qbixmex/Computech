@@ -17,38 +17,6 @@ export class ProductsService {
     private readonly productRepository: Repository<Product>
   ) {}
 
-  async create(createProductDto: CreateProductDto): Promise<Product> {
-
-    try {
-
-      const product = this.productRepository.create(createProductDto);
-
-      await this.productRepository.save(product);
-
-      return {
-        id: product.id,
-        title: product.title,
-        slug: product.slug,
-        brand: product.brand,
-        color: product.color,
-        price: product.price,
-        description: product.description,
-        images: product.images,
-        condition: product.condition,
-        stock: product.stock,
-        published: product.published,
-        category: product.category,
-        tags: product.tags,
-        createdAt: product.createdAt,
-        updatedAt: product.updatedAt,
-      };
-
-    } catch (error) {
-      this.handleDBExceptions(error);
-    }
-
-  }
-
   async findAll(
     paginationDto: PaginationDto
   ): Promise<Product[]> {
@@ -105,6 +73,37 @@ export class ProductsService {
       createdAt: product.createdAt,
       updatedAt: product.updatedAt,
     };
+
+  }
+
+  async create(createProductDto: CreateProductDto): Promise<Product> {
+    try {
+
+      const product = this.productRepository.create(createProductDto);
+
+      await this.productRepository.save(product);
+
+      return {
+        id: product.id,
+        title: product.title,
+        slug: product.slug,
+        brand: product.brand,
+        color: product.color,
+        price: product.price,
+        description: product.description,
+        images: product.images,
+        condition: product.condition,
+        stock: product.stock,
+        published: product.published,
+        category: product.category,
+        tags: product.tags,
+        createdAt: product.createdAt,
+        updatedAt: product.updatedAt,
+      };
+
+    } catch (error) {
+      this.handleDBExceptions(error);
+    }
 
   }
 
